@@ -1,0 +1,1 @@
+import{u as e}from"./CddvpNyI.js";import{e as t,o,c as a}from"./CChhudFR.js";const m=t({__name:"favorites",setup(r){return e({title:"Избранное | Nuxt Shop"}),(s,n)=>(o(),a("h1",null,"favs"))}});export{m as default};

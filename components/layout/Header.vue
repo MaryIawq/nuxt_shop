@@ -1,12 +1,8 @@
 <script setup lang="ts">
 import {useAuthStore} from '~/store/auth.store';
-import {useDrawerStore} from "~/store/drawer.store";
 import {NAV_DATA} from "~/components/layout/navigation.data";
-import {ref} from "vue";
 
-const router = useRouter()
 const authStore = useAuthStore();
-const drawerStore = useDrawerStore();
 
 import {useThemeStore} from "~/store/theme.store";
 

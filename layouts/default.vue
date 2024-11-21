@@ -1,9 +1,4 @@
 <script setup lang="ts">
-import {useDrawerStore} from "~/store/drawer.store";
-
-const drawerStore = useDrawerStore()
-const router = useRouter()
-
 </script>
 
 <template>

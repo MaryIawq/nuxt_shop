@@ -1,28 +1,41 @@
-import {defineStore} from 'pinia';
-import {ref, watchEffect} from 'vue';
+import { defineStore } from 'pinia';
+import { ref, watchEffect } from 'vue';
 import { useRouter } from 'vue-router';
 
+const AUTH_TOKEN_COOKIE_NAME = 'auth_token';
+const BACKEND_URL = 'http://localhost:8000/api';
+
+interface User {
+    name: string;
+}
+
+interface AuthCookie {
+    token: string;
+    user?: User;
+}
+
+
 export const useAuthStore = defineStore('auth', () => {
-    const cookie = useCookie('my_auth_token');
-    const isAuth = ref(false);
+    const cookie = useCookie<AuthCookie | null>(AUTH_TOKEN_COOKIE_NAME);
+    const isAuthed = ref<boolean>(false);
     const userName = ref<string | null>(null);
     const router = useRouter();
 
     watchEffect(() => {
         if (cookie.value) {
-            isAuth.value = true;
+            isAuthed.value = true;
             userName.value = cookie.value.user?.name || null;
         } else {
-            isAuth.value = false;
+            isAuthed.value = false;
             userName.value = null;
         }
     });
 
-    async function register(registerFormData: any) {
+    async function register(registerFormData: { name: string; email: string; password: string; confirmPassword: string }) {
         try {
-            const {name, email, password, confirmPassword} = registerFormData;
+            const { name, email, password, confirmPassword } = registerFormData;
             const finalName = name.trim() === '' ? 'Пользователь' : name;
-            const result = await $fetch('http://localhost:8000/api/auth/register', {
+            const result = await $fetch<AuthCookie>(BACKEND_URL + '/auth/register', {
                 method: 'POST',
                 body: {
                     name: finalName,
@@ -32,16 +45,16 @@ export const useAuthStore = defineStore('auth', () => {
                 },
             });
             cookie.value = result;
-            router.push('/')
+            await router.push('/');
         } catch (err) {
-            console.log(err)
+            console.error(err);
         }
     }
 
-    async function login(loginFormData: any) {
-        try{
+    async function login(loginFormData: { email: string; password: string }) {
+        try {
             const { email, password } = loginFormData;
-            const result = await $fetch('http://localhost:8000/api/auth/login', {
+            const result = await $fetch<AuthCookie>(BACKEND_URL+'/auth/login', {
                 method: 'POST',
                 body: {
                     email,
@@ -49,25 +62,30 @@ export const useAuthStore = defineStore('auth', () => {
                 },
             });
             cookie.value = result;
-            userName.value = result.user?.name;
-            console.log(cookie.value)
-            router.push('/')
+            userName.value = result.user?.name || null;
+            console.log(cookie.value);
+            await router.push('/');
         } catch (err) {
-            console.log(err)
+            console.error(err);
         }
     }
 
     async function logout() {
-        await $fetch('http://localhost:8000/api/auth/logout', {
-            method: 'DELETE',
-            headers: {
-                Authorization: `Bearer ${cookie.value.token}`,
-            },
-        });
-        cookie.value = null;
-        userName.value = null;
+        try {
+            if (cookie.value?.token) {
+                await $fetch(BACKEND_URL + '/auth/logout', {
+                    method: 'GET',
+                    headers: {
+                        Authorization: `Bearer ${cookie.value.token}`,
+                    },
+                });
+            }
+            cookie.value = null;
+            userName.value = null;
+        } catch (err) {
+            console.error(err);
+        }
     }
 
-
-    return {isAuth, userName, register, login, logout};
+    return { isAuthed, userName, register, login, logout };
 });

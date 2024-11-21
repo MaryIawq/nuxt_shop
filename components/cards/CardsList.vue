@@ -8,7 +8,6 @@ import { useThemeStore } from "~/store/theme.store";
 const themeStore = useThemeStore();
 const drawerStore = useDrawerStore();
 const cards = ref(CARDS_DATA);
-const grid = ref(false);
 </script>
 
 <template>
@@ -16,7 +15,7 @@ const grid = ref(false);
   <div
       class="flex flex-wrap items-center justify-center">
     <client-only>
-      <UiCard v-for="card in cards">
+      <UiCard v-for="card in cards" :key="card">
         <UiCardHeader>
           <div class="md:flex hidden pt-2 pb-1">
             <div class="flex items-center gap-4">

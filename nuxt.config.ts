@@ -1,4 +1,7 @@
 export default defineNuxtConfig({
+    router: {
+        base: '/nuxt_shop/',
+    },
     compatibilityDate: '2024-04-03',
     devtools: {enabled: true},
     ssr: true,

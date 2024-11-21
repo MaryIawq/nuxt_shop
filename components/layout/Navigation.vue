@@ -1,7 +1,6 @@
 <script setup lang="ts">
 
 import {NAV_DATA} from "~/components/layout/navigation.data";
-import {navigationMenuTriggerStyle} from '@/components/ui/navigation-menu'
 </script>
 
 <template>

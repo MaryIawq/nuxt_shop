@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
-import { CARDS_DATA, ICard } from "~/components/cards/cards.data";
+import { CARDS_DATA } from "~/components/cards/cards.data";
+import type { ICard } from "~/components/cards/cards.data";
 
 interface DrawerContentItem {
     cardId: number;

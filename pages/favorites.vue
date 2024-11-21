@@ -2,10 +2,6 @@
 useHead({
   title: 'Избранное | Nuxt Shop'
 })
-
-definePageMeta({
-  middleware: 'auth'
-})
 </script>
 
 <template>

@@ -7,7 +7,9 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "deploy": "gh-pages -d .nuxt/dist/client",
+    "predeploy": "npm run build"
   },
   "overrides": {
     "vue": "^3.5.6"
@@ -23,10 +25,12 @@
     "@vueuse/core": "^10.11.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "gh-pages": "^6.2.0",
     "lucide-vue-next": "^0.429.0",
     "next-auth": "^4.21.1",
     "pinia": "^2.2.0",
     "radix-vue": "^1.9.6",
+    "save-dev": "^0.0.1-security",
     "tailwind-merge": "^2.4.0",
     "tailwindcss-animate": "^1.0.7",
     "vaul-vue": "^0.2.0",

@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import {useDrawerStore} from "~/store/drawer.store";
 const drawerStore = useDrawerStore();
-import { useThemeStore } from "~/store/theme.store";
 </script>
 
 <template>

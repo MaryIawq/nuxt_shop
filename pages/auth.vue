@@ -5,7 +5,7 @@ useHead({
   title: 'Авторизация | Nuxt Shop'
 })
 definePageMeta({
-  middleware: 'guest'
+  middleware: 'not-authed-only'
 })
 </script>
 <template>

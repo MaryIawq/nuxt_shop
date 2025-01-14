@@ -13,7 +13,7 @@ import {NAV_DATA} from "~/components/layout/navigation.data";
           <span>{{ item.title }}</span>
         </UiNavigationMenuTrigger>
         <UiNavigationMenuContent>
-          <ul class="grid w-[400px] gap-1 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+          <ul class="grid gap-1 p-4 grid-cols-2 w-[800px] ">
             <li v-for="link in item.links"
                 :key="link.name">
               <UiNavigationMenuLink as-child>

@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import {useDrawerStore} from "~/store/drawer.store";
+import {useThemeStore} from "~/store/theme.store";
+
+const themeStore = useThemeStore();
 const drawerStore = useDrawerStore();
 </script>
 
@@ -12,23 +15,23 @@ const drawerStore = useDrawerStore();
           <Icon name="material-symbols:shopping-cart-outline" size="1.3em"/>
         </UiDrawerTrigger>
       </UiButton>
-      <UiDrawerContent v-if="drawerStore.formattedDrawer.length">
+      <UiDrawerContent :class="themeStore.theme" v-if="drawerStore.formattedDrawer.length">
         <UiDrawerHeader>
           <UiDrawerTitle>Корзина</UiDrawerTitle>
         </UiDrawerHeader>
         <div class="flex flex-col">
-          <div v-for="item in drawerStore.formattedDrawer"
-                  :key="item.name"
-                  class="rounded-sm border bg-white m-1 flex flex-row w-full h-fit">
-            <NuxtImg class="w-fit" src="./product.svg"></NuxtImg>
 
-            <div class="flex w-full justify-between sm:px-3 p-0 items-center">
-              <div class="flex flex-col items-center sm:mx-3 mx-1">
-                <UiCardTitle class="sm:text-sm text-xs">{{ item.title }}</UiCardTitle>
-                <div class="flex items-center">
-                  <UiButton  @click="drawerStore.remove(item.id)">
+          <div v-for="item in drawerStore.formattedDrawer"
+               :key="item.name"
+               class="rounded-sm border bg-card m-1 flex flex-row w-full h-fit">
+            <NuxtImg class="w-fit" src="./product.svg"></NuxtImg>
+            <div class="flex w-full justify-between sm:px-3 p-1 items-center">
+              <div class="flex flex-col items-center sm:mx-3 mx-1 justify-start">
+                <UiCardTitle class="sm:text-sm text-xs w-full">{{ item.title }}</UiCardTitle>
+                <div class="flex items-center w-full">
+                  <UiButton @click="drawerStore.remove(item.id)">
                     <Icon size="0.85rem"
-                          name="line-md:minus" ></Icon>
+                          name="line-md:minus"></Icon>
                   </UiButton>
                   <span class="sm:text-lg text-xs">{{ item.quantity }}</span>
                   <UiButton @click="drawerStore.add(item.id)">
@@ -51,9 +54,9 @@ const drawerStore = useDrawerStore();
                 </UiButton>
               </UiCardDescription>
             </div>
-
           </div>
-        </div>
+          </div>
+
         <UiDrawerFooter>
           <div>
             <p>Выбрано товаров: {{ drawerStore.cardsTotal }}</p>
@@ -69,15 +72,12 @@ const drawerStore = useDrawerStore();
           </UiDrawerClose>
         </UiDrawerFooter>
       </UiDrawerContent>
-
-
-      <UiDrawerContent class="flex items-center min-h-60 gap-10" v-else>
+      <UiDrawerContent :class="themeStore.theme" class="flex items-center min-h-60 gap-10" v-else>
         <UiDrawerTitle>Ваша корзина пуста</UiDrawerTitle>
         <UiDrawerClose>
-          <UiButton variant="primary" size="lg">Вернуться к выбору товаров</UiButton>
+          <UiButton variant="primary" class="px-4" size="lg">Вернуться к выбору товаров</UiButton>
         </UiDrawerClose>
       </UiDrawerContent>
-
     </UiDrawer>
   </client-only>
 </template>

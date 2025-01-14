@@ -5,6 +5,7 @@ import {NAV_DATA} from "~/components/layout/navigation.data";
 const authStore = useAuthStore();
 
 import {useThemeStore} from "~/store/theme.store";
+import {Button} from "~/components/ui/button";
 
 const themeStore = useThemeStore();
 onMounted(() => {
@@ -54,8 +55,11 @@ onMounted(() => {
         <UiButton>
           <Icon name="line-md:account" size="1.5rem"></Icon>
         </UiButton>
-        <p class="text-sm">{{ authStore.isAuth ? authStore.userName : 'Гость' }}</p>
-        <UiAlertDialog v-if="authStore.isAuth">
+
+        <p class="text-sm">{{ authStore.isAuthed ? authStore.userName : 'Гость' }}</p>
+
+
+        <UiAlertDialog v-if="authStore.isAuthed">
           <UiAlertDialogTrigger as-child>
             <UiButton>
               <Icon name="line-md:log-out" size="1.5rem"/>

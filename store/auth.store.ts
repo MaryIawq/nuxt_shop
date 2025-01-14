@@ -8,12 +8,10 @@ const BACKEND_URL = 'http://localhost:8000/api';
 interface User {
     name: string;
 }
-
 interface AuthCookie {
     token: string;
     user?: User;
 }
-
 
 export const useAuthStore = defineStore('auth', () => {
     const cookie = useCookie<AuthCookie | null>(AUTH_TOKEN_COOKIE_NAME);
@@ -74,7 +72,7 @@ export const useAuthStore = defineStore('auth', () => {
         try {
             if (cookie.value?.token) {
                 await $fetch(BACKEND_URL + '/auth/logout', {
-                    method: 'GET',
+                    method: 'DELETE',
                     headers: {
                         Authorization: `Bearer ${cookie.value.token}`,
                     },
